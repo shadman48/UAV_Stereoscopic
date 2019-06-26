@@ -1,0 +1,5 @@
+Install Jetpack for the TX2 verson 4.2.
+Install python 3
+Install ZED SDK 2.8.2 MAKE SURE ITS THE JETSON VERSON AKA JETPACK, look for the getting started guide.
+
+
