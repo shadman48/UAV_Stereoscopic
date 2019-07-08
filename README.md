@@ -1,8 +1,7 @@
 # Collision avoidance for UAV's using Stereoscopic Vision.
 
-hello chica
+hello, soon to have something done.
 
-[![Linux pipeline status](https://gitlab.com/bot-stereolabs/zed-python-api/badges/master/pipeline.svg)](https://gitlab.com/bot-stereolabs/zed-python-api/commits/master) [![Windows Build status](https://ci.appveyor.com/api/projects/status/qtnt36xkmfrooj7j/branch/master?svg=true)](https://ci.appveyor.com/project/adujardin/zed-python-api-l80k9/branch/master)
 
 ## Getting started
 
