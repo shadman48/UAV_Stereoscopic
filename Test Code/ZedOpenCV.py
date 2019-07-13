@@ -21,8 +21,17 @@
 import pyzed.sl as sl
 import cv2
 import math
-import numpy as np
+import numpy as np #needed for OpenCV
 import sys
+
+#Global Variables
+NUMBER_OF_ROWS = 5
+NUMBER_OF_COLUMNS = 5
+NUMBER_OF_BLOCKS = NUMBER_OF_ROWS * NUMBER_OF_COLUMNS
+
+
+
+
 
 def main():
 # Create a Camera object
@@ -30,8 +39,10 @@ def main():
 
     # Create a InitParameters object and set configuration parameters
     init_params = sl.InitParameters()
-    init_params.depth_mode = sl.DEPTH_MODE.DEPTH_MODE_QUALITY  # Can be set to PERFORMANCE, MEDIUM, OR QUALITY
-    init_params.coordinate_units = sl.UNIT.UNIT_MILLIMETER  # Use milliliter units (for depth measurements)
+    init_params.depth_mode = sl.DEPTH_MODE.DEPTH_MODE_ULTRA  # Can be set to PERFORMANCE, MEDIUM, ULTRA, OR QUALITY
+    init_params.coordinate_units = sl.UNIT.UNIT_MILLIMETER  # Use millimeter units (for depth measurements)
+    #init_params.depth_minimum_distance = 0.15 # Set the minimum depth perception distance to 15cm
+
 
     # Open the camera
     if not zed.is_opened():
@@ -47,8 +58,10 @@ def main():
     # Capture 50 images and depth, then stop
     i = 0
     image = sl.Mat()
-    depth = sl.Mat()
+    depth_map = sl.Mat()
     point_cloud = sl.Mat()
+    
+    
 
     key = ''
     while key != 113:  # for 'q' key
@@ -56,20 +69,20 @@ def main():
         if err == sl.ERROR_CODE.SUCCESS:
             # Retrieve depth map AND DISPLAY IT
             zed.retrieve_image(image, sl.VIEW.VIEW_DEPTH)
+            
             #zed.retrieve_image(image, sl.VIEW.VIEW_LEFT)
-            cv2.imshow("ZED", image.get_data())
+            cv2.imshow("ZED Live View.", image.get_data())
             key = cv2.waitKey(5)
-            #settings(key, cam, runtime, mat)
-            #while True:
-        	# A new image is available if grab() returns SUCCESS
+            # A new image is available if grab() returns SUCCESS
             if zed.grab(runtime_parameters) == sl.ERROR_CODE.SUCCESS:
                 # Retrieve left image
-                zed.retrieve_image(image, sl.VIEW.VIEW_LEFT)
+                #zed.retrieve_image(image, sl.VIEW.VIEW_LEFT)
                 # Retrieve depth map. Depth is aligned on the left image
-                zed.retrieve_measure(depth, sl.MEASURE.MEASURE_DEPTH)
+                zed.retrieve_measure(depth_map, sl.MEASURE.MEASURE_DEPTH)
                 # Retrieve colored point cloud. Point cloud is aligned on the left image.
                 zed.retrieve_measure(point_cloud, sl.MEASURE.MEASURE_XYZRGBA)
-
+                
+              
                 # Get and print distance value in mm at the center of the image
                 # We measure the distance camera - object using Euclidean distance
                 x = round(image.get_width() / 2)
