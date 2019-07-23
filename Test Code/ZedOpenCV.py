@@ -75,6 +75,7 @@ def main():
             key = cv2.waitKey(5)
             # A new image is available if grab() returns SUCCESS
             if zed.grab(runtime_parameters) == sl.ERROR_CODE.SUCCESS:
+
                 # Retrieve left image
                 #zed.retrieve_image(image, sl.VIEW.VIEW_LEFT)
                 # Retrieve depth map. Depth is aligned on the left image
@@ -96,6 +97,7 @@ def main():
             if not np.isnan(distance) and not np.isinf(distance):
                 distance = round(distance)
                 print("Distance to Camera at ({0}, {1}): {2} mm\n".format(x, y, distance))
+                print("Resolution: {0}, {1}.".format(round(zed.get_resolution().width, 2), zed.get_resolution().height)) #Use to get resolution
                 # Increment the loop
                 i = i + 1
             else:
@@ -111,6 +113,17 @@ def main():
 
     # Close the camera
    # zed.close()
+
+
+
+###########################
+#def OverlayGrid():
+
+### Look up
+def lookUpTable():
+
+
+
 
 if __name__ == "__main__":
     main()
